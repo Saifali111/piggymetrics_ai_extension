@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: account_service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: account_db
+      username: root
+      password: password
+      authentication-database: admin
+
+
+server:
+  port: 6000

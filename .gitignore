@@ -1,0 +1,40 @@
+# Compiled files
+*.class
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.mvn/
+.m2/
+.vscode/
+.settings/
+.project
+.classpath
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Application specific
+application-local.yml
+application-dev.yml
+application-prod.yml
+bootstrap-local.yml
+
+# Docker
+docker-compose.override.yml
+
+# Temp files
+*.tmp
+*.swp
+*.swo
+*~
