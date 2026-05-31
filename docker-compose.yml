@@ -11,5 +11,29 @@ services:
     volumes:
       - account-mongo-data:/data/db
 
+  statistic-mongodb:
+    image: mongo:7.0
+    container_name: statistic-mongodb
+    ports:
+      - "27019:27017"  # Statistics DB on 27019 (external) -> 27017 (internal)
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: statistics_db
+    volumes:
+      - statistic-mongo-data:/data/db
+
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"    # Spring Boot connects here
+      - "15672:15672"  # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
 volumes:
   account-mongo-data:
+  statistic-mongo-data:

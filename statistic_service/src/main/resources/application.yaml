@@ -1,3 +1,25 @@
 spring:
   application:
     name: statistic_service
+  config:
+    import: configserver:http://localhost:8888
+#  data:
+#    mongodb:
+#      host: localhost
+#      port: 27019
+#      database: statistics_db
+#      username: root
+#      password: password
+#      authentication-database: admin
+#  cloud:
+#    config:
+#      enabled: false
+#
+#server:
+#  port: 7001
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

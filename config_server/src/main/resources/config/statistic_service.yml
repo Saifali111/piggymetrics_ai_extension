@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: statistic_service
+  data:
+    mongodb:
+      host: localhost
+      port: 27019
+      database: statistics_db
+      username: root
+      password: password
+      authentication-database: admin
+
+server:
+  port: 7001
