@@ -1,12 +1,16 @@
 package com.piggymetrics.account_service.service;
 
+import com.piggymetrics.account_service.config.RabbitConfig;
 import com.piggymetrics.account_service.domain.Account;
 import com.piggymetrics.account_service.domain.Currency;
 import com.piggymetrics.account_service.domain.Saving;
 import com.piggymetrics.account_service.domain.User;
+import com.piggymetrics.account_service.messaging.AccountUpdateMessage;
 import com.piggymetrics.account_service.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -20,6 +24,9 @@ import java.util.Date;
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository repository;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public Account findByName(String accountName) {
@@ -66,6 +73,12 @@ public class AccountServiceImpl implements AccountService {
         log.debug("account {} changes have been saved", name);
 
         // statisticsClient.updateStatistics(name, account);
-        // TODO: uncomment when statistics-service is built
+        AccountUpdateMessage message = new AccountUpdateMessage(name, account);
+        rabbitTemplate.convertAndSend(
+                RabbitConfig.STATISTICS_EXCHANGE,
+                RabbitConfig.ROUTING_KEY,
+                message
+        );
+        log.info("account update event published for: {}", name);
     }
 }
